@@ -1,9 +1,14 @@
 "use client";
+import { FaLock } from 'react-icons/fa';
 import { useState, useEffect } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa"; // For navigation arrows
-import { topics } from "./data/topics"; // Import topics data
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { topics } from "./data/topics";
 
-// Function to convert English numbers to Bangla numerals
+// Default credentials (change these for production)
+const DEFAULT_USERNAME = "user2020";
+const DEFAULT_PASSWORD = "pass2020";
+
+
 const convertToBanglaNumerals = (num) => {
   const banglaNumerals = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
   return num.toString().split("").map(digit => banglaNumerals[parseInt(digit)]).join("");
@@ -11,7 +16,39 @@ const convertToBanglaNumerals = (num) => {
 
 export default function HomePage() {
   const [selectedTopic, setSelectedTopic] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0); // To track the current image
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Check localStorage on initial load
+  useEffect(() => {
+    const savedUsername = localStorage.getItem("username");
+    const savedPassword = localStorage.getItem("password");
+    
+    if (savedUsername === DEFAULT_USERNAME && savedPassword === DEFAULT_PASSWORD) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogin = () => {
+    setIsLoading(true);
+    setLoginError(false);
+
+    setTimeout(() => {
+      if (username === DEFAULT_USERNAME && password === DEFAULT_PASSWORD) {
+        // Store credentials in localStorage
+        localStorage.setItem("username", username);
+        localStorage.setItem("password", password);
+        setIsLoggedIn(true);
+      } else {
+        setLoginError(true);
+      }
+      setIsLoading(false);
+    }, 2000);
+  };
 
   const handleNextImage = () => {
     if (currentImageIndex < selectedTopic.images.length - 1) {
@@ -40,9 +77,93 @@ export default function HomePage() {
     }
   }, [selectedTopic]);
 
+  // If logged in, show the content; otherwise, show the login form
+  if (!isLoggedIn) {
+    return (
+      <div className="flex flex-col h-screen bg-gradient-to-b from-green-100 to-green-50 p-4 sm:p-6" style={{ backgroundImage: 'url(/images/islamic-pattern.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        <div className="flex-grow w-full max-w-[1200px] mx-auto bg-white bg-opacity-80 backdrop-blur-md shadow-lg rounded-lg p-4 sm:p-6">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-green-900 text-center mb-6">
+            <span className="text-lg text-gray-500 block">بِسْمِ ٱللَّهِ</span>
+            <FaLock className="inline-block text-green-700 text-2xl mb-2" /> {/* Lock icon */}
+            লগইন
+          </h1>
+
+          {/* Login Form */}
+          <div className="flex flex-col items-center">
+            <input
+              type="text"
+              className="mb-4 p-2 border border-green-500 rounded-md w-64"
+              placeholder="ইউজারনেম"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+              type="password"
+              className="mb-6 p-2 border border-green-500 rounded-md w-64"
+              placeholder="পাসওয়ার্ড"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button
+              onClick={handleLogin}
+              className="bg-green-700 text-white px-6 py-2 rounded-md shadow-md hover:bg-green-800 flex items-center justify-center"
+              disabled={isLoading} // Disable button while loading
+            >
+              {isLoading ? (
+                <div className="flex items-center">
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                  লগইন হচ্ছে...
+                </div>
+              ) : (
+                "লগইন"
+              )}
+            </button>
+          </div>
+
+          {/* Login Error Alert */}
+          {loginError && (
+            <div className="flex items-center justify-between mt-4 p-3 bg-red-600 text-white rounded-full shadow-lg">
+              <span>অ্যালার্ট! সঠিক তথ্য প্রবেশ করান</span>
+              <button
+                className="text-white font-bold ml-3"
+                onClick={() => setLoginError(false)} // Close the alert
+              >
+                ❌
+              </button>
+            </div>
+          )}
+
+          {/* Hadith 1 */}
+          <div className="mt-6 text-center text-gray-700 italic">
+            <blockquote className="text-lg">
+              "একজন মুমিন কখনো অন্য মুমিনকে ঠকাতে পারে না, সে কখনো মিথ্যা বলবে না এবং তার প্রতিশ্রুতি কখনো ভঙ্গ করবে না।"
+              <footer className="mt-2 text-gray-500 text-sm">
+                - হাদিস <br />
+                <span className="text-xs">সাহিহ মুসলিম, হাদিস নং ৩৭৭৫</span>
+              </footer>
+            </blockquote>
+          </div>
+
+          {/* Hadith 2 */}
+          <div className="mt-6 text-center text-gray-700 italic">
+            <blockquote className="text-lg">
+              "পৃথিবীর সমস্ত কিছুর মধ্যে সবচেয়ে মধুর বিষয় হলো আল্লাহর দয়া।"
+              <footer className="mt-2 text-gray-500 text-sm">
+                - হাদিস <br />
+                <span className="text-xs">সহিহ বুখারী, হাদিস নং ৬৩৮৫</span>
+              </footer>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col h-screen bg-gradient-to-b from-green-100 to-green-50 p-4 sm:p-6" style={{ backgroundImage: 'url(/images/islamic-pattern.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <div className="flex-grow w-full max-w-[1200px] mx-auto bg-white bg-opacity-80 backdrop-blur-md shadow-lg rounded-lg p-4 sm:p-6">
+    
+
         {/* Display Topic List or Topic Details */}
         {!selectedTopic ? (
           <>
@@ -53,23 +174,23 @@ export default function HomePage() {
             <p className="text-center text-gray-600 mb-6">
               ইসলামের আলোতে জীবন গড়ুন, সঠিক জ্ঞান অর্জন করুন।
             </p>
-{/* Profile Picture Section */}
-<div className="flex justify-center items-center mt-6">
-  <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-green-700">
-    <img
-      src={profilePic || defaultProfilePic} // Display the uploaded pic or default pic
-      alt="Profile"
-      className="w-full h-full object-cover"
-    />
-  </div>
-</div>
+            {/* Profile Picture Section */}
+            <div className="flex justify-center items-center mt-6">
+              <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-green-700">
+                <img
+                  src={profilePic || defaultProfilePic} // Display the uploaded pic or default pic
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
 
-{/* Name Section */}
-<div className="text-center mt-2">
-  <h3 className="text-xl font-semibold text-green-900">
-  হাফিজ মাওলানা আলী আহমদ
-  </h3>
-</div>
+            {/* Name Section */}
+            <div className="text-center mt-2">
+              <h3 className="text-xl font-semibold text-green-900">
+                হাফিজ মাওলানা আলী আহমদ
+              </h3>
+            </div>
 
             {/* Topic List */}
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -80,7 +201,7 @@ export default function HomePage() {
                   onClick={() => setSelectedTopic(topic)}
                 >
                   <h2 className="text-2xl font-semibold text-white mb-2">{topic.title}</h2>
-                  <p className="text-gray-300 text-sm">বিস্তারিত পড়তে ক্লিক করুন</p>
+                  <p className="text-gray-300 text-sm">বিস্তারিত পড়তে ক্লিক করুন</p>
                 </div>
               ))}
             </div>
