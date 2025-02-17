@@ -133,24 +133,15 @@ export default function HomePage() {
             </div>
           )}
 
+       
+
           {/* Hadith 1 */}
           <div className="mt-6 text-center text-gray-700 italic">
             <blockquote className="text-lg">
-              "একজন মুমিন কখনো অন্য মুমিনকে ঠকাতে পারে না, সে কখনো মিথ্যা বলবে না এবং তার প্রতিশ্রুতি কখনো ভঙ্গ করবে না।"
+              "ক্বিয়ামতের দিন বান্দার কাজসমূহের মধ্যে সর্বপ্রথম সলাতের হিসাব নেওয়া হবে।"
               <footer className="mt-2 text-gray-500 text-sm">
-                - হাদিস <br />
-                <span className="text-xs">সাহিহ মুসলিম, হাদিস নং ৩৭৭৫</span>
-              </footer>
-            </blockquote>
-          </div>
-
-          {/* Hadith 2 */}
-          <div className="mt-6 text-center text-gray-700 italic">
-            <blockquote className="text-lg">
-              "পৃথিবীর সমস্ত কিছুর মধ্যে সবচেয়ে মধুর বিষয় হলো আল্লাহর দয়া।"
-              <footer className="mt-2 text-gray-500 text-sm">
-                - হাদিস <br />
-                <span className="text-xs">সহিহ বুখারী, হাদিস নং ৬৩৮৫</span>
+                 <br />
+                <span className="text-xs">সহীহ তিরমিযীঃ ৪১৩, ইবনু মাযাহঃ ১৪২৫,১৪২৬</span>
               </footer>
             </blockquote>
           </div>
@@ -265,10 +256,10 @@ export default function HomePage() {
       {!selectedTopic && (
         <div className="flex justify-center items-center mt-6 bg-white py-4 shadow-md rounded-b-lg">
           <blockquote className="text-center text-gray-700 text-lg italic px-6">
-            "একজন মুমিন কখনো অন্য মুমিনকে ঠকাতে পারে না, সে কখনো মিথ্যা বলবে না এবং তার প্রতিশ্রুতি কখনো ভঙ্গ করবে না।"
+            "আমার কথা (অন্যদের কাছে) পৌঁছিয়ে দাও, তা যদি একটি আয়াতও হয়।"
             <footer className="mt-2 text-gray-500 text-sm">
               - হাদিস <br />
-              <span className="text-xs">সাহিহ মুসলিম, হাদিস নং ৩৭৭৫</span>
+              <span className="text-xs">সহীহ বুখারীঃ ৩২১৫</span>
             </footer>
           </blockquote>
         </div>
