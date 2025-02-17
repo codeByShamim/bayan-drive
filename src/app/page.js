@@ -53,17 +53,23 @@ export default function HomePage() {
             <p className="text-center text-gray-600 mb-6">
               ইসলামের আলোতে জীবন গড়ুন, সঠিক জ্ঞান অর্জন করুন।
             </p>
+{/* Profile Picture Section */}
+<div className="flex justify-center items-center mt-6">
+  <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-green-700">
+    <img
+      src={profilePic || defaultProfilePic} // Display the uploaded pic or default pic
+      alt="Profile"
+      className="w-full h-full object-cover"
+    />
+  </div>
+</div>
 
-            {/* Profile Picture Section */}
-            <div className="flex justify-center items-center mt-6">
-              <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-green-700">
-                <img
-                  src={profilePic || defaultProfilePic} // Display the uploaded pic or default pic
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
+{/* Name Section */}
+<div className="text-center mt-2">
+  <h3 className="text-xl font-semibold text-green-900">
+  হাফিজ মাওলানা আলী আহমদ
+  </h3>
+</div>
 
             {/* Topic List */}
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
