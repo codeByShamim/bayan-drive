@@ -138,7 +138,7 @@ export default function HomePage() {
           {/* Hadith 1 */}
           <div className="mt-6 text-center text-gray-700 italic">
             <blockquote className="text-lg">
-              "ক্বিয়ামতের দিন বান্দার কাজসমূহের মধ্যে সর্বপ্রথম সলাতের হিসাব নেওয়া হবে।"
+              "ক্বিয়ামতের দিন বান্দার কাজসমূহের মধ্যে সর্বপ্রথম সালাতের হিসাব নেওয়া হবে।"
               <footer className="mt-2 text-gray-500 text-sm">
                  <br />
                 <span className="text-xs">সহীহ তিরমিযীঃ ৪১৩, ইবনু মাযাহঃ ১৪২৫,১৪২৬</span>
